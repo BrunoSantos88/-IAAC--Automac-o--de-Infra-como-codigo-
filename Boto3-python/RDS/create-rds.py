@@ -1,6 +1,6 @@
 import boto3
-client = boto3.client('rds', aws_access_key_id='AKIATX4TOZZAD77AB3ML',
-                     aws_secret_access_key='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',
+client = boto3.client('rds', aws_access_key_id='##########',
+                     aws_secret_access_key='########',
                      region_name='us-east-1')
 
 response = client.create_db_instance(
