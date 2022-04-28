@@ -1,0 +1,2 @@
+metadata = {
+    startup-script-url = "gs://mybucket/myscript.sh"

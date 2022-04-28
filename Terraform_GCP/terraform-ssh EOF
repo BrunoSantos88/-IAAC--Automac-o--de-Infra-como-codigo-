@@ -1,0 +1,6 @@
+ metadata = {
+    "ssh-keys" = <<EOT
+<user>:<key>
+<user>:<key>
+EOT
+  }

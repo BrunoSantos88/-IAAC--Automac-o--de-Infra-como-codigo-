@@ -1,0 +1,2 @@
+metadata = {
+ssh-keys = "${file("/root/.ssh/google_compute_engine.pub")}"

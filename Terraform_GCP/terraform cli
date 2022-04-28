@@ -1,0 +1,13 @@
+commados
+
+terraform fmt = lista de projetos que sera executados
+
+teraform init  = verificar parametros
+
+teraforma plan = print do projeto
+
+terraform apply = executar
+
+terraform apply -auto-approve  = executar modidificação
+
+terrform fmt - lista de projeto a ser executados ou modificado

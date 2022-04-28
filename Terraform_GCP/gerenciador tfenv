@@ -1,0 +1,89 @@
+instalar tfenv
+
+Support
+Currently tfenv supports the following OSes
+
+Mac OS X (64bit)
+Linux
+64bit
+Arm
+
+Using puppet module sergk-tfenv
+
+include ::tfenv
+Manual
+Check out tfenv into any path (here is ${HOME}/.tfenv)
+$ git clone https://github.com/tfutils/tfenv.git ~/.tfenv
+Add ~/.tfenv/bin to your $PATH any way you like
+$ echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bash_profile
+OR you can make symlinks for tfenv/bin/* scripts into a path that is already added to your $PATH (e.g. /usr/local/bin) OSX/Linux Only!
+
+$ ln -s ~/.tfenv/bin/* /usr/local/bin
+On Ubuntu/Debian touching /usr/local/bin might require sudo access, but you can create ${HOME}/bin or ${HOME}/.local/bin and on next login it will get added to the session $PATH or by running . ${HOME}/.profile it will get added to the current shell session's $PATH.
+
+$ mkdir -p ~/.local/bin/
+$ . ~/.profile
+$ ln -s ~/.tfenv/bin/* ~/.local/bin
+$ which tfenv
+Usage
+tfenv install [version]
+Install a specific version of Terraform.
+
+If no parameter is passed, the version to use is resolved automatically via .terraform-version files or TFENV_TERRAFORM_VERSION environment variable (TFENV_TERRAFORM_VERSION takes precedence), defaulting to 'latest' if none are found.
+
+If a parameter is passed, available options:
+
+$ tfenv install
+$ tfenv install 0.7.0
+$ tfenv install latest
+
+
+$ tfenv use
+$ tfenv use min-required
+$ tfenv use 0.7.0
+$ tfenv use latest
+$ tfenv use latest:^0.8
+tfenv uninstall <version>
+Uninstall a specific version of Terraform latest is a syntax to uninstall latest version latest:<regex> is a syntax to uninstall latest version matching regex (used by grep -e)
+
+$ tfenv uninstall 0.7.0
+$ tfenv uninstall latest
+$ tfenv uninstall latest:^0.8
+tfenv list
+List installed versions
+
+$ tfenv list
+* 0.10.7 (set by /opt/tfenv/version)
+  0.9.0-beta2
+  0.8.8
+  0.8.4
+  0.7.0
+  0.7.0-rc4
+  0.6.16
+  0.6.2
+  0.6.1
+tfenv list-remote
+List installable versions
+
+$ tfenv list-remote
+0.9.0-beta2
+0.9.0-beta1
+0.8.8
+0.8.7
+0.8.6
+0.8.5
+0.8.4
+0.8.3
+0.8.2
+0.8.1
+0.8.0
+0.8.0-rc3
+0.8.0-rc2
+0.8.0-rc1
+0.8.0-beta2
+0.8.0-beta1
+0.7.13
+0.7.12
+...
+
+
