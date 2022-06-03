@@ -1,0 +1,37 @@
+import boto3
+
+## Run command against your linux VM
+def runRemoteShellCommands (InstanceId):
+    ssm_client = boto3.client('ssm', region_name="us-east-1") 
+    response = ssm_client.send_command( InstanceIds=[InstanceId], DocumentName="AWS-RunShellScript", Parameters={'commands':[ 'sudo systemctl status amazon-ssm-agent']},)
+    command_id = response['Command']['CommandId']
+    output = ssm_client.get_command_invocation( CommandId=command_id, InstanceId=InstanceId)
+    while output['Status'] == "InProgress":   
+        output = ssm_client.get_command_invocation( CommandId=command_id, InstanceId=InstanceId) 
+    print(output['StandardOutputContent'])
+## Run command against your linux VM
+def runRemoteShellCommands (InstanceId):
+    ssm_client = boto3.client('ssm', region_name="us-east-1") 
+    response = ssm_client.send_command( InstanceIds=[InstanceId], DocumentName="AWS-RunShellScript", Parameters={'commands':[ 'sudo systemctl status amazon-ssm-agent']},)
+    command_id = response['Command']['CommandId']
+    output = ssm_client.get_command_invocation( CommandId=command_id, InstanceId=InstanceId)
+    while output['Status'] == "InProgress":   
+        output = ssm_client.get_command_invocation( CommandId=command_id, InstanceId=InstanceId) 
+    print(output['StandardOutputContent'])
+
+#CreateInstanceProfileRole()
+
+#create_key_pair()
+
+#returnedsubnetid  = create_aws_vpc()
+
+#createdinstanceID = create_instance(returnedsubnetid)
+
+get_running_instances()
+
+get_public_ip("i-0016f12e547e92072")
+
+runRemoteShellCommands("i-0016f12e547e92072")
+get_public_ip("i-0016f12e547e92072")
+
+runRemoteShellCommands("i-0016f12e547e92072")

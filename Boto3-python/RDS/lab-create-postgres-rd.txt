@@ -1,0 +1,24 @@
+#### So funciona T3 micro requesiççao minima
+
+import boto3
+
+client = boto3.client('rds', aws_access_key_id='#############',
+                     aws_secret_access_key='###############',
+                     region_name='us-east-1')
+
+response = client.create_db_instance(
+    AvailabilityZone='us-east-1a',
+    StorageType='gp2',
+    AllocatedStorage=20,
+    DBInstanceClass='db.t2.micro',
+    DBInstanceIdentifier='postgress',
+    Engine='postgres',
+    EngineVersion= "PostgreSQL 14.1-R1",
+    MasterUsername='Admin',
+    MasterUserPassword='*Mulekao1988*',
+    Port=5432,
+    DBSubnetGroupName='subnets-rede-puclicas-rds',
+    VpcSecurityGroupIds=["sg-0c27615ee75a816a5"],
+    )
+
+print(response)
