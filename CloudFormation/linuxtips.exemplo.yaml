@@ -1,0 +1,89 @@
+Resources:
+
+# CRIANDO O MEU VPC
+  NovoVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.100.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+      - Key: Name
+        Value: !Sub ${AWS::StackName}-VPC
+
+# CRIANDO O INTERNET GATEWAY
+  NovoInternetGateway:
+    Type: AWS::EC2::InternetGateway
+    DependsOn: NovoVPC
+
+# CONECTANDO O IG COM O VPC
+  NovoAttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref NovoVPC
+      InternetGatewayId: !Ref NovoInternetGateway
+
+# CRIANDO A SUBNET PUBLICA
+  NovaSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: 10.100.1.0/24
+      VpcId: !Ref NovoVPC
+      AvailabilityZone: !Select [0, !GetAZs '' ]
+      Tags:
+      - Key: Name
+        Value: !Sub ${AWS::StackName}-Publica
+
+# CRIANDO A ROUTE TABLE PUBLICA
+  PublicaRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref NovoVPC
+      Tags: 
+      - Key: Name
+        Value: Publica
+
+# ASSOCIANDO A TABELA DE ROTAS COM A SUBNET PUBLICA
+  PublicaRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicaRouteTable
+      SubnetId: !Ref NovaSubnet1
+
+
+# CRIANDO O SEC GROUP WEB
+  NovoWEBSecGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: Webservers
+      GroupDescription: Sec Group para os Web Servers
+      VpcId: !Ref NovoVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - 
+          IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - 
+          IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+
+  NovaDBInstance:
+    Type: AWS::EC2::Instance
+      InstanceType: t2.micro
+      ImageId: ami-05fa00d4c63e32376
+      KeyName: windows-machine
+      Monitoring: true
+      SecurityGroupIds:
+        - !Ref NovoDBSecGroup
+      SubnetId: !Ref NovaSubnet1
+      Tags:
+        -
+          Key: Name
+          Value: !Sub ${AWS::StackName}-DB
